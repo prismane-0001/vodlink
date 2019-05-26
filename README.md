@@ -70,46 +70,46 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 - made some tweaks in `checkSize()` so the streamlink process really gets killed instantly
 - updated to `streamlink v.1.1.0`
 
-**– 08.04.2019:**
+**08.04.2019:**
 - v.0.4.6 
 - exchange `-f` with `-e` in `if` clauses
 - optimize `streamlink` paramaterization – so no more short, intermediate VODs get lost
 
-**– 29.03.2019:**
+**29.03.2019:**
 - v.0.4.5 
 - check for flags optimized
 
-**– 26.03.2019:**
+**26.03.2019:**
 - v.0.4.4
 - send shorter URLs to the discord update bot (without the filename)
 
-**– 25.03.2019:**
+**25.03.2019:**
 - v.0.4.3.1 
 - timestamps in ISO-8601 with dot as delimiter
 
-**– 23.03.2019:**
+**23.03.2019:**
 - found a trick that prevents OpenLoad's file deletion algorithm (=
 
-**– 17.03.2019:**
+**17.03.2019:**
 - tweaked streamlink parameterization
 - hoping for more donos as OpenLoad starts deleting VODs
 
-**– 04.03.2019:**
+**04.03.2019:**
 - v.0.4.3 STABLE
 - put normal and recovery streamlink invocation in one function – reduced code duplication alot
 
-**– 14.02.2019:**
+**14.02.2019:**
 - add unique upload log name
 
-**– 09.02.2019:**
+**09.02.2019:**
 - stopped the script from trying to recover/recurse when the YouTube API still reports live but nothing gets written to disk (the stream is already offline) 
 
-**– 06.02.2019:**
+**06.02.2019:**
 - fixed recovery streamlink invocation offset time parameterizing
 - tweaked streamlink parameterizing (max. timeout and rewind)
 - added `builtin` command to `kill ...`
 
-**– 04.02.2019:**
+**04.02.2019:**
 - v.0.4.2 STABLE
 - rename repository to `vodlink` because it is a software framework now basically and not only a bash script and will probably grow even more.
 - use `/bin/bash` as interpreter — everything is still POSIX compliant and done with `sed` and friends instead of `bashisms`
