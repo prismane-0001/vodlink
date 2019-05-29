@@ -184,7 +184,11 @@ main()
     wait $ffmpegpid # wait for FFmpeg to finish otherwise depending on the system we might lose data etc... 
     #if ps -p $checksizepid > /dev/null 2>&1; then  
       #builtin kill $checksizepid
-    #fi    
+    #fi
+    if [ ! -s $OUT ]; then # FILE exists and has a size greater than zero
+      echo "$PROG[$$][$(date +%R)]: Outfile: \"${OUT##/*/}\" does not exist – keeping \"$RIP\" intact and exiting!" > /dev/kmsg
+      exit 1
+    fi
     #uploadToOL    
     rm -f $RIP $OLOG    
     echo "$PROG[$$][$(date +%R)]: Clean-up is done and file \"${OUT##/*/}\" is ready." > /dev/kmsg       
