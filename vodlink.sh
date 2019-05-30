@@ -19,14 +19,25 @@
 # using bash builtins to edit text streams instead of long pipes with sed expressions  
 # but I ran this on a very small shell and so this is coded POSIX compliant even it is now interpreted by bash
 # you could also use (d)ash or any other POSIX compliant shell...
-trap 'echo "$PROG[$$][$(date +%R)]: Caught signal…" > /dev/kmsg 2>&1;
-      echo "$PROG[$$][$(date +%R)]: \"$RIP\" is probably still around!" > /dev/kmsg 2>&1;
-      echo "$PROG[$$][$(date +%R)]: Exiting…" > /dev/kmsg 2>&1;
+trap 'echo "$PROG[$$][$(date +%R)]: Caught signal…" > $LOGGER 2>&1;
+      echo "$PROG[$$][$(date +%R)]: \"$RIP\" is probably still around!" > $LOGGER 2>&1;
+      echo "$PROG[$$][$(date +%R)]: Exiting…" > $LOGGER 2>&1;
       rm -f $LOCK;      
       exit 130' TSTP INT TERM HUP
-      
+## OS X hack - sends output to syslog - need prismane to check
+OSXCheck() {
+  if [ `uname` = "Linux" ]; then
+    LOGGER=/dev/kmsg
+  elif [ `uname` = "Darwin" ]; then
+    LOGGER=/dev/stdout
+    exec 1> >(logger -s -t $(basename $0))
+    exec 2> >(logger -s -t $(basename $0))
+  fi
+}
+  
+
 init() {  
-  PROG="vodlink v.0.5.2"
+  PROG="vodlink v.0.5.3"
   GOOGLE_API_KEY="your_api_key" # we run in a container of cron which has no knowledge of our env
   # ---- configure these three variables and you are set to go ----
   USERNAME=rick
@@ -34,6 +45,7 @@ init() {
   DLIVENAME="pewdiepie"
   CHANNELID=UC-lHJZR3Gqxm24_Vd_AJ5Yw
   # --------------------------------------------------------------
+  OSXCheck
   mkdir -p /home/$USERNAME/Streamrips
   LOCK=/home/$USERNAME/Streamrips/"$CHANNELNAME"_vodlink.lock
   RIP=/home/$USERNAME/Streamrips/"$CHANNELNAME"_$(date +%d-%m-%Y_%H%M).m2ts
@@ -47,11 +59,11 @@ checkSize() {
   do
     local size=$(ls -al $checkfile | cut -d ' ' -f5)
     if [ $size -ge $limit ]; then
-      echo "$PROG[$$][$(date +%R)]: checkSize() – writing to a new file…" > /dev/kmsg
+      echo "$PROG[$$][$(date +%R)]: checkSize() – writing to a new file…" > $LOGGER
       echo "$PROG[$$][$(date +%R)]: Filesize is: $size bytes" > /dev/kmsg
       # TERM (15) takes 15 mins to work, lets try INT (2), if that doesn't work KILL (9)
       builtin kill -n 2 $streamlinkpid
-      echo "$PROG[$$][$(date +%R)]: trying with signal 2 (INT)" > /dev/kmsg
+      echo "$PROG[$$][$(date +%R)]: trying with signal 2 (INT)" > $LOGGER
 
       $0 -maxreached &      
       return
@@ -84,7 +96,7 @@ getTitle() {
 }
 
 updateVODChannel() {
-  echo "$PROG[$$][$(date +%R)]: Sending update to the Discord channel…" > /dev/kmsg
+  echo "$PROG[$$][$(date +%R)]: Sending update to the Discord channel…" > $LOGGER
   PYBOT=/home/$USERNAME/Streamrips/discordbot.py # change to your path
   chmod +x $PYBOT
   DLURL=$(cat $OLOG | cut -d  '"' -f32 | sed 's/\\//g') 
@@ -100,7 +112,7 @@ updateVODChannel() {
 }
 
 uploadToOL() {
-  echo "$PROG[$$][$(date +%R)]: Starting the upload to OpenLoad…" > /dev/kmsg
+  echo "$PROG[$$][$(date +%R)]: Starting the upload to OpenLoad…" > $LOGGER
   OLOG=/home/$USERNAME/Streamrips/"$CHANNELNAME"_openload.log
   OLOGIN=""
   OKEY=""
@@ -108,10 +120,10 @@ uploadToOL() {
   OULURL=$(GET "https://api.openload.co/1/file/ul?login=$OLOGIN&key=$OKEY&folder=$OFOLDER" | cut -d '"' -f12 | sed 's/\\//g')
   curl -F file1=@"$OUT" $OULURL > $OLOG
   if [ $? -eq 0 ]; then
-    echo "$PROG[$$][$(date +%R)]: Successfully uploaded file to OpenLoad!" > /dev/kmsg
+    echo "$PROG[$$][$(date +%R)]: Successfully uploaded file to OpenLoad!" > $LOGGER
     #updateVODChannel
   else
-    echo "$PROG[$$][$(date +%R)]: Failed to upload the file…" > /dev/kmsg
+    echo "$PROG[$$][$(date +%R)]: Failed to upload the file…" > $LOGGER
   fi
 }
 
@@ -128,10 +140,10 @@ isLive() {
 streamLink() {
   touch $LOCK
   if [ -z "$1" ]; then
-    echo "$PROG[$$][$(date +%R)]: starting streamlink…" > /dev/kmsg
+    echo "$PROG[$$][$(date +%R)]: starting streamlink…" > $LOGGER
     nice -n -5 su $USERNAME -c "streamlink --retry-open 3 --retry-streams 5 --retry-max 10 --hls-live-edge 25 --hls-live-restart --hls-segment-threads 8 --hls-segment-attempts 5 --hls-playlist-reload-attempts 10 --hls-segment-timeout 30 --hls-timeout 160 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > /dev/kmsg 2>&1 &
   elif [ -n "$1" ]; then
-    echo "$PROG[$$][$(date +%R)]: starting streamlink… Flags: $1" > /dev/kmsg
+    echo "$PROG[$$][$(date +%R)]: starting streamlink… Flags: $1" > $LOGGER
     nice -n -5 su $USERNAME -c "streamlink --retry-open 10 --retry-streams 10 --retry-max 25 --hls-live-edge 25 --hls-start-offset=-03:00 --hls-segment-threads 8 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-playlist-reload-attempts 25 --hls-timeout 160 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > /dev/kmsg  2>&1 &
   fi  
   streamlinkpid=$!
@@ -143,7 +155,7 @@ streamLink() {
 # you have to adjust the path for where you put dlive.py
 dliveStreamLink() {
   touch $LOCK
-  echo "$PROG[$$][$(date +%R)]: starting streamlink with sideloaded dlive plugin…" > /dev/kmsg
+  echo "$PROG[$$][$(date +%R)]: starting streamlink with sideloaded dlive plugin…" > $LOGGER
   nice -n -5 su dave -c "streamlink --plugin-dirs /home/$USER/dlive-plugin --retry-open 3 --retry-streams 5 --retry-max 10 --hls-live-edge 25 --hls-live-restart --hls-segment-threads 5 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-playlist-reload-attempts 10 --hls-timeout 280 -o $RIP https://dlive.tv/$DLIVENAME best" > /dev/kmsg 2>&1 &
   dlivepid=$!
   wait $dlivepid
@@ -156,7 +168,7 @@ main()
   init  
   case `isLive` in
   0)
-    echo "$PROG[$$][$(date +%R)]: Channel $CHANNELNAME is live! Streamlink is ripping to \"${RIP##/*/}\"" > /dev/kmsg       
+    echo "$PROG[$$][$(date +%R)]: Channel $CHANNELNAME is live! Streamlink is ripping to \"${RIP##/*/}\"" > $LOGGER    
     getTitle
     #checkSize &
     #checksizepid=$! 
@@ -167,11 +179,11 @@ main()
     # SIGTERM n=15 exit 143 -> standard signal of the kill builtin
     # TODO: check why desktop streams always return 1 and on the phone encoder streamlink returns 0 
     # 0 (sometimes w phone encoder) most of the time 1 (OBS) for normal exit
-    echo "$PROG[$$][$(date +%R)]: streamlink (su) exited with code $streamlinkret." > /dev/kmsg     
+    echo "$PROG[$$][$(date +%R)]: streamlink (su) exited with code $streamlinkret." > $LOGGER    
     # if there was nothing written don't process an empty file (as there was no error checking this surely led to some confusion)
     # we have nothing to put in a proper container nor to upload – also don't try again – stream must be offline
     if [ ! -e $RIP ]; then
-      echo "$PROG[$$][$(date +%R)]: Nothing was written to disk, exiting…" > /dev/kmsg
+      echo "$PROG[$$][$(date +%R)]: Nothing was written to disk, exiting…" > $LOGGER
       exit 1
     fi
     ffmpeg -hide_banner -nostdin -i $RIP -metadata comment="ripped by $USERNAME with $PROG" -c copy $OUT &
@@ -179,7 +191,7 @@ main()
     # rescue attempt - sometimes the YouTube API is funny thats why here is an OR i know that isLive checks for a lock
     # or if the streamer ends in OBS but doesn't instantly end the encoder on the youtube website we might get a wrong response
     if [ ! -e $LOCK ]; then # [ `isLive` -eq 0 ] || 
-      echo "$PROG[$$][$(date +%R)]: Trying again in case we might miss the last bit of the stream…" > /dev/kmsg
+      echo "$PROG[$$][$(date +%R)]: Trying again in case we might miss the last bit of the stream…" > $LOGGER
       $0 -recover &
     fi
     wait $ffmpegpid # wait for FFmpeg to finish otherwise depending on the system we might lose data etc... 
@@ -187,27 +199,27 @@ main()
       #builtin kill $checksizepid
     #fi
     if [ ! -s $OUT ]; then # FILE exists and has a size greater than zero
-      echo "$PROG[$$][$(date +%R)]: Outfile: \"${OUT##/*/}\" does not exist – keeping \"$RIP\" intact and exiting!" > /dev/kmsg
+      echo "$PROG[$$][$(date +%R)]: Outfile: \"${OUT##/*/}\" does not exist – keeping \"$RIP\" intact and exiting!" > $LOGGER
       exit 1
     fi
     #uploadToOL    
     rm -f $RIP $OLOG    
-    echo "$PROG[$$][$(date +%R)]: Clean-up is done and file \"${OUT##/*/}\" is ready." > /dev/kmsg       
+    echo "$PROG[$$][$(date +%R)]: Clean-up is done and file \"${OUT##/*/}\" is ready." > $LOGGER     
     wait
     ;;
   1)
-    echo "$PROG[$$][$(date +%R)]: Ripping the stream is in progress…" > /dev/kmsg 
+    echo "$PROG[$$][$(date +%R)]: Ripping the stream is in progress…" > $LOGGER
     exit 0
     ;;
   2)
     local tmp=$(date +%H)
     if [ $tmp -lt 10 ] || [ $tmp -gt 20 ]; then # adjust to the hours where you want output - so theres no hourly cron output
-      echo "$PROG[$(date +%R)]: Channel $CHANNELNAME is not live!" > /dev/kmsg
+      echo "$PROG[$(date +%R)]: Channel $CHANNELNAME is not live!" > $LOGGER
     fi
     exit 1
     ;;
   3)
-    echo "$PROG[$$][$(date +%R)]: Channel $CHANNELNAME is not live but the lockfile exists – removing…" > /dev/kmsg
+    echo "$PROG[$$][$(date +%R)]: Channel $CHANNELNAME is not live but the lockfile exists – removing…" > $LOGGER
     rm -f $LOCK
     exit 1
     ;;
