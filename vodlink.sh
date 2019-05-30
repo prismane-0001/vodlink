@@ -60,7 +60,7 @@ checkSize() {
     local size=$(ls -al $checkfile | cut -d ' ' -f5)
     if [ $size -ge $limit ]; then
       echo "$PROG[$$][$(date +%R)]: checkSize() – writing to a new file…" > $LOGGER
-      echo "$PROG[$$][$(date +%R)]: Filesize is: $size bytes" > /dev/kmsg
+      echo "$PROG[$$][$(date +%R)]: Filesize is: $size bytes" > $LOGGER
       # TERM (15) takes 15 mins to work, lets try INT (2), if that doesn't work KILL (9)
       builtin kill -n 2 $streamlinkpid
       echo "$PROG[$$][$(date +%R)]: trying with signal 2 (INT)" > $LOGGER
