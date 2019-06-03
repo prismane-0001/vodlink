@@ -50,6 +50,9 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 *Should you be a streamer and want me to set this up for your streams/VODs send me an email and I am sure we can work something out!*
 
 #### changelog:
+**02.06.2019:**
+- logging interface rewrite for macosx and linux compatibility
+
 **29.05.2019:**
 - added check if the `OUTFILE.mp4` exists and is larger than 0 bytes,
   if not we keep the `RIP.m2ts`  file intact
