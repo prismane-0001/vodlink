@@ -50,6 +50,10 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 *Should you be a streamer and want me to set this up for your streams/VODs send me an email and I am sure we can work something out!*
 
 #### changelog:
+**29.05.2019:**
+- added check if the `OUTFILE.mp4` exists and is larger than 0 bytes,
+  if not we keep the `RIP.m2ts`  file intact
+
 **18.05.2019:**
 - had to delete entire GitHub repo because a commit exposed sensitive data
 - v.0.5.2
@@ -102,7 +106,7 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 - add unique upload log name
 
 **09.02.2019:**
-- stopped the script from trying to recover/recurse when the YouTube API still reports live but nothing gets written to disk (the stream is already offline) 
+- stopped the script from trying to recover/recurse when the YouTube API still reports live but nothing gets written to disk   (the stream is already offline) 
 
 **06.02.2019:**
 - fixed recovery streamlink invocation offset time parameterizing
@@ -111,12 +115,12 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 
 **04.02.2019:**
 - v.0.4.2 STABLE
-- rename repository to `vodlink` because it is a software framework now basically and not only a bash script and will probably grow even more.
+- rename repository to `vodlink` because it is a software framework now basically and not only a bash script and will         probably grow even more.
 - use `/bin/bash` as interpreter — everything is still POSIX compliant and done with `sed` and friends instead of `bashisms`
 - `streamlink` updated to version 1.0.0 which improved overall stability
 - implemented everything via PIDs `kill` and `wait ...` – everything is now contained and IPC works without `pgrep` etc.
 - wrapper script gone since a few minor versions bumps – everything implemented as (async) functions now
-- it is now possible to run `streamlink` and not interfere with a running instance and I just updated the lockfile code so it is possible to run `vodlink` for multiple streamers.
+- it is now possible to run `streamlink` and not interfere with a running instance and I just updated the lockfile code so     it is possible to run `vodlink` for multiple streamers.
 - you will need multiple installations tho
 
 ##### © 2018-2019 oMeN23
