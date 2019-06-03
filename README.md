@@ -15,6 +15,7 @@ also check that your crontab has its PATH set `PATH=/usr/local/sbin:/usr/local/b
 - `streamlink 1.1.1` *(can be installed with `pip3` or `apt`)*
 - `FFmpeg`
 - `Google API key for YouTube Data API v3`
+- `logger` *(used in the Mac version "POSIX.2")*
 ### Getting your own API key
 https://support.google.com/googleapi/answer/6158862?hl=en
 
@@ -54,8 +55,7 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 - logging interface rewrite for macosx and linux compatibility - ask prismane (=
 
 **29.05.2019:**
-- added check if the `OUTFILE.mp4` exists and is larger than 0 bytes,
-  if not we keep the `RIP.m2ts`  file intact
+- added check if the `OUTFILE.mp4` exists and is larger than 0 bytes, if not we keep the `RIP.m2ts` file intact
 
 **18.05.2019:**
 - had to delete entire GitHub repo because a commit exposed sensitive data
