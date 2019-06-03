@@ -15,7 +15,7 @@ also check that your crontab has its PATH set `PATH=/usr/local/sbin:/usr/local/b
 - `streamlink 1.1.1` *(can be installed with `pip3` or `apt`)*
 - `FFmpeg`
 - `Google API key for YouTube Data API v3`
-- `logger` *(used in the Mac version "POSIX.2")
+- `logger` *(used in the Mac version "POSIX.2")*
 ### Getting your own API key
 https://support.google.com/googleapi/answer/6158862?hl=en
 
@@ -112,12 +112,12 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 
 **04.02.2019:**
 - v.0.4.2 STABLE
-- rename repository to `vodlink` because it is a software framework now basically and not only a bash script and will probably grow even more.
+- rename repository to `vodlink` because it is a software framework now basically and not only a bash script and will         probably grow even more.
 - use `/bin/bash` as interpreter — everything is still POSIX compliant and done with `sed` and friends instead of `bashisms`
 - `streamlink` updated to version 1.0.0 which improved overall stability
 - implemented everything via PIDs `kill` and `wait ...` – everything is now contained and IPC works without `pgrep` etc.
 - wrapper script gone since a few minor versions bumps – everything implemented as (async) functions now
-- it is now possible to run `streamlink` and not interfere with a running instance and I just updated the lockfile code so it is possible to run `vodlink` for multiple streamers.
+- it is now possible to run `streamlink` and not interfere with a running instance and I just updated the lockfile code so     it is possible to run `vodlink` for multiple streamers.
 - you will need multiple installations tho
 
 ##### © 2018-2019 oMeN23
