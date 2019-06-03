@@ -54,6 +54,9 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 **02.06.2019:**
 - logging interface rewrite for macosx and linux compatibility - ask prismane (=
 
+**29.05.2019:**
+- added check if the `OUTFILE.mp4` exists and is larger than 0 bytes, if not we keep the `RIP.m2ts` file intact
+
 **18.05.2019:**
 - had to delete entire GitHub repo because a commit exposed sensitive data
 - v.0.5.2
