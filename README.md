@@ -109,7 +109,7 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 - add unique upload log name
 
 **09.02.2019:**
-- stopped the script from trying to recover/recurse when the YouTube API still reports live but nothing gets written to disk (the stream is already offline) 
+- stopped the script from trying to recover/recurse when the YouTube API still reports live but nothing gets written to disk   (the stream is already offline) 
 
 **06.02.2019:**
 - fixed recovery streamlink invocation offset time parameterizing
