@@ -52,7 +52,7 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 
 #### changelog:
 **02.06.2019:**
-- logging interface rewrite for macosx
+- logging interface rewrite for macosx and linux compatibility - ask prismane (=
 
 **18.05.2019:**
 - had to delete entire GitHub repo because a commit exposed sensitive data
