@@ -15,6 +15,7 @@ also check that your crontab has its PATH set `PATH=/usr/local/sbin:/usr/local/b
 - `streamlink 1.1.1` *(can be installed with `pip3` or `apt`)*
 - `FFmpeg`
 - `Google API key for YouTube Data API v3`
+- MacOS X version uses `logger` ("POSIX.2")
 ### Getting your own API key
 https://support.google.com/googleapi/answer/6158862?hl=en
 
