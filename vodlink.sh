@@ -24,7 +24,7 @@ trap 'echo "$PROG[$$][$(date +%R)]: Caught signal…" > $LOGGER 2>&1;
       echo "$PROG[$$][$(date +%R)]: Exiting…" > $LOGGER 2>&1;
       rm -f $LOCK;      
       exit 130' TSTP INT TERM HUP
-## OS X hack - sends output to syslog - need prismane to check
+## OS X check - sends output to syslog - TODO need prismane to check
 OSXCheck() {
   if [ `uname` = "Linux" ]; then
     LOGGER=/dev/kmsg
@@ -45,7 +45,7 @@ init() {
   DLIVENAME="pewdiepie"
   CHANNELID=UC-lHJZR3Gqxm24_Vd_AJ5Yw
   # --------------------------------------------------------------
-  OSXCheck
+  OSXCheck # ok function call in place
   mkdir -p /home/$USERNAME/Streamrips
   LOCK=/home/$USERNAME/Streamrips/"$CHANNELNAME"_vodlink.lock
   RIP=/home/$USERNAME/Streamrips/"$CHANNELNAME"_$(date +%d-%m-%Y_%H%M).m2ts
