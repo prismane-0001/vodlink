@@ -7,7 +7,7 @@ POSIX compliant shell script - which should be run as an hourly cronjob!
 Uncomment the features you want to use after filling in the necessary variables.
 *(e.g.: `sudo ln -s /home/rick/Projects/vodlink.sh /etc/cron.hourly/vodlink` –
 also check that your crontab has its PATH set `PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin`) so you don't have to enter absolute pathnames for every program you run)*
-
+At the moment aimed at Debian based distros, but should also run on Mac OS X and Cygwin. (=
 
 
 ### Dependencies
