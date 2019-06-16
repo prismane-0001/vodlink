@@ -51,6 +51,11 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 *Should you be a streamer and want me to set this up for your streams/VODs send me an email and I am sure we can work something out!*
 
 #### changelog:
+**16.06.2019:**
+- did not update to the latest `streamlink-dev` version, because `1.1.1` is stable and provides what we need
+- tweaked streamlink parameterizing for longer DCs (up to 10 minutes) 
+- increased number of threads in the threadpool
+
 **02.06.2019:**
 - logging interface rewrite for macosx and linux compatibility - ask prismane (=
 
