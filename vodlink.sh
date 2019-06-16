@@ -141,10 +141,10 @@ streamLink() {
   touch $LOCK
   if [ -z "$1" ]; then
     echo "$PROG[$$][$(date +%R)]: starting streamlink…" > $LOGGER
-    nice -n -5 su $USERNAME -c "streamlink --retry-open 3 --retry-streams 5 --retry-max 10 --hls-live-edge 25 --hls-live-restart --hls-segment-threads 8 --hls-segment-attempts 5 --hls-playlist-reload-attempts 10 --hls-segment-timeout 30 --hls-timeout 160 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > /dev/kmsg 2>&1 &
+    nice -n -5 su $USERNAME -c "streamlink --retry-open 3 --retry-streams 5 --retry-max 10 --hls-live-edge 25 --hls-live-restart --hls-segment-threads 8 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-playlist-reload-attempts 10 --hls-timeout 280 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > /dev/kmsg 2>&1 &
   elif [ -n "$1" ]; then
     echo "$PROG[$$][$(date +%R)]: starting streamlink… Flags: $1" > $LOGGER
-    nice -n -5 su $USERNAME -c "streamlink --retry-open 10 --retry-streams 10 --retry-max 25 --hls-live-edge 25 --hls-start-offset=-03:00 --hls-segment-threads 8 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-playlist-reload-attempts 25 --hls-timeout 160 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > /dev/kmsg  2>&1 &
+    nice -n -5 su $USERNAME -c "streamlink --retry-open 15 --retry-streams 30 --retry-max 20 --hls-live-edge 25 --hls-segment-threads 8 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-start-offset=-05:00 --hls-playlist-reload-attempts 20 --hls-timeout 280 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > /dev/kmsg  2>&1 &
   fi  
   streamlinkpid=$!
   wait $streamlinkpid
