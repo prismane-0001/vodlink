@@ -53,7 +53,7 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 #### changelog:
 **17.06.2019:**
 - removed `logger` as dependency because it is a sys-util on Mac OS X
-- changed to `LOGGER=/dev/null` on Mac OS X – `logger` will take care of logging `stdout` and `stderr` to the syslog ih "real-time"
+- changed to `LOGGER=/dev/null` on Mac OS X – `logger` will take care of logging `stdout` and `stderr` to the syslog in "real-time"
 
 **16.06.2019:**
 - did not update to the latest `streamlink-dev` version, because `1.1.1` is stable and provides what we need
