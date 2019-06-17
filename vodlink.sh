@@ -29,7 +29,7 @@ OSXCheck() {
   if [ `uname` = "Linux" ]; then
     LOGGER=/dev/kmsg
   elif [ `uname` = "Darwin" ]; then
-    LOGGER=/dev/stdout
+    LOGGER=/dev/null
     exec 1> >(logger -s -t $(basename $0))
     exec 2> >(logger -s -t $(basename $0))
   fi
