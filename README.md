@@ -51,6 +51,10 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 *Should you be a streamer and want me to set this up for your streams/VODs send me an email and I am sure we can work something out!*
 
 #### changelog:
+**17.06.2019:**
+- removed `logger` as dependency because it is a sys-util on Mac OS X
+- changed to `LOGGER=/dev/null` on Mac OS X – `logger` will take care of the logging `stdout and stderr`
+
 **16.06.2019:**
 - did not update to the latest `streamlink-dev` version, because `1.1.1` is stable and provides what we need
 - tweaked streamlink parameterizing for longer DCs (up to 10 minutes) 
