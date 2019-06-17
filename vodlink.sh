@@ -66,7 +66,7 @@ checkSize() {
       echo "$PROG[$$][$(date +%R)]: trying with signal 2 (INT)" > $LOGGER
 
       $0 -maxreached &      
-      return
+      break
     fi
     sleep 900
   done
