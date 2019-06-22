@@ -53,7 +53,7 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 
 #### changelog:
 **22.06.2019:**
-- tweaked polling interval
+- changed polling interval to 15mins
 
 **17.06.2019:**
 - removed `logger` as dependency because it is a sys-util on Mac OS X
