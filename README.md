@@ -7,6 +7,7 @@ POSIX compliant shell script - which should be run as an hourly cronjob!
 Uncomment the features you want to use after filling in the necessary variables.
 *(e.g.: `sudo ln -s /home/rick/Projects/vodlink.sh /etc/cron.hourly/vodlink` –
 also check that your crontab has its PATH set `PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin`) so you don't have to enter absolute pathnames for every program you run)*
+Also you could add the file to your crontab (needs sudo) or systems crontab.
 At the moment aimed at Debian based distros, but should also run on Mac OS X and Cygwin. (=
 
 
@@ -51,6 +52,9 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 *Should you be a streamer and want me to set this up for your streams/VODs send me an email and I am sure we can work something out!*
 
 #### changelog:
+**22.06.2019:**
+- tweaked polling interval
+
 **17.06.2019:**
 - removed `logger` as dependency because it is a sys-util on Mac OS X
 - changed to `LOGGER=/dev/null` on Mac OS X – `logger` will take care of logging `stdout` and `stderr` to the syslog in "real-time"
