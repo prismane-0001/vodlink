@@ -10,9 +10,9 @@ also check that your crontab has its PATH set `PATH=/usr/local/sbin:/usr/local/b
 Also you could add the file to your crontab (needs sudo) or your systems crontab and run it every 15 minutes like:
 Add vodlink to your `$PATH` first.
 ```
-sudo ln -s /home/%USER/Projects/vodlink.sh /usr/bin/vodlink # change to your location to create a vodlink in your $PATH
+sudo ln -s /home/%USER/Projects/vodlink.sh /usr/bin/vodlink # create a symlink of vodlink to one of the standard $PATH directories
 ```
-Add these two lines to your system's crontab
+Add these two lines to your system's crontab:
 ```
 # run vodlink every 15 mins
 */15 *  * * *   root    /usr/bin/vodlink
