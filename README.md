@@ -5,9 +5,19 @@ use vodlink to watch the streams when you have the time on your hands.
 Not even a copyright claim will hurt you – as the data is on your drive.
 POSIX compliant shell script - which should be run as an hourly cronjob!
 Uncomment the features you want to use after filling in the necessary variables.
-*(e.g.: `sudo ln -s /home/rick/Projects/vodlink.sh /etc/cron.hourly/vodlink` –
+*(e.g.: `sudo ln -s /home/%USER/Projects/vodlink.sh /etc/cron.hourly/vodlink` –
 also check that your crontab has its PATH set `PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin`) so you don't have to enter absolute pathnames for every program you run)*
-Also you could add the file to your crontab (needs sudo) or systems crontab.
+Also you could add the file to your crontab (needs sudo) or your systems crontab and run it every 15 minutes like:
+Add vodlink to your `$PATH` first.
+```
+sudo ln -s /home/%USER/Projects/vodlink.sh /usr/bin/vodlink # change to your location to create a vodlink in your $PATH
+```
+Add these two lines to your system's crontab
+```
+# run vodlink every 15 mins
+*/15 *  * * *   root    /usr/bin/vodlink
+```
+
 At the moment aimed at Debian based distros, but should also run on Mac OS X and Cygwin. (=
 
 
@@ -52,6 +62,9 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 *Should you be a streamer and want me to set this up for your streams/VODs send me an email and I am sure we can work something out!*
 
 #### changelog:
+**23.06.2019:**
+- updated manual
+
 **22.06.2019:**
 - changed polling interval to 15mins
 
