@@ -7,6 +7,7 @@ POSIX compliant shell script - which should be run as an hourly cronjob!
 Uncomment the features you want to use after filling in the necessary variables.
 *(e.g.: `sudo ln -s /home/%USER/Projects/vodlink.sh /etc/cron.hourly/vodlink` –
 also check that your crontab has its PATH set `PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin`) so you don't have to enter absolute pathnames for every program you run)*
+I am not sure if the `$SHELL` variable has to be set because it is `/bin/sh` which links to (d)ash on my system but vodlink gets run by bash because of the shebang and deliberately running `bash`.
 Also you could add the file to your crontab (needs sudo and a set `$PATH` – `sudo /usr/bin/vodlink`should work) or your systems crontab and run it every 15 minutes like:
 Add vodlink to your `$PATH` first.
 ```
