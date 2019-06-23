@@ -195,6 +195,10 @@ main()
       $0 -recover &
     fi
     wait $ffmpegpid # wait for FFmpeg to finish otherwise depending on the system we might lose data etc... 
+    if [ $? -ne 0 ]; then
+      echo "FFmpeg failed…"
+      exit 1
+    fi
     #if ps -p $checksizepid > /dev/null 2>&1; then  
       #builtin kill $checksizepid
     #fi
