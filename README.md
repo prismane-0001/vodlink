@@ -65,6 +65,14 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 #### changelog:
 **23.06.2019:**
 - updated manual
+- added FFmpeg check
+```
+wait $ffmpegpid
+    if [ $? -ne 0 ]; then
+      echo "FFmpeg failed…"
+      exit 1
+    fi
+```
 
 **22.06.2019:**
 - changed polling interval to 15mins
