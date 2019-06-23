@@ -214,7 +214,7 @@ main()
   2)
     local hrs=$(date +%H)
     local mins=$(date +%M)
-    if [ $mins -eq 00 ] && [ $hrs -lt 10 ] && [ $hrs -gt 20 ]; then # adjust output to your cron settings
+    if [ $hrs -lt 10 -o $hrs -gt 20 ] && [ $mins -eq 00 ]; then # adjust output to your cron settings
       echo "$PROG[$(date +%R)]: Channel $CHANNELNAME is not live!" > $LOGGER
     fi
     exit 1
