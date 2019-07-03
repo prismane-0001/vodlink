@@ -19,15 +19,15 @@
 # using bash builtins to edit text streams instead of long pipes with sed expressions  
 # but I ran this on a very small shell and so this is coded POSIX compliant even it is now interpreted by bash
 # you could also use (d)ash or any other POSIX compliant shell...
-trap 'echo "$PROG[$$][$(date +%R)]: Caught signal…" > $LOGGER 2>&1;
-      echo "$PROG[$$][$(date +%R)]: \"$RIP\" is probably still around!" > $LOGGER 2>&1;
-      echo "$PROG[$$][$(date +%R)]: Exiting…" > $LOGGER 2>&1;
+trap 'echo "$PROG[$$][$(date +%R)]: Caught signal…" > $LOGGER;
+      echo "$PROG[$$][$(date +%R)]: \"$RIP\" is probably still around!" > $LOGGER;
+      echo "$PROG[$$][$(date +%R)]: Exiting…" > $LOGGER;
       rm -f $LOCK;      
       exit 130' TSTP INT TERM HUP
 ## OS X check - sends output to syslog - TODO need prismane to check
 OSXCheck() {
   if [ `uname` = "Linux" ]; then
-    LOGGER=/dev/kmsg
+    LOGGER=/dev/kmsg 2>&1
   elif [ `uname` = "Darwin" ]; then
     LOGGER=/dev/null
     exec 1> >(logger -s -t $(basename $0))
@@ -62,8 +62,8 @@ checkSize() {
       echo "$PROG[$$][$(date +%R)]: checkSize() – writing to a new file…" > $LOGGER
       echo "$PROG[$$][$(date +%R)]: Filesize is: $size bytes" > $LOGGER
       # TERM (15) takes 15 mins to work, lets try INT (2), if that doesn't work KILL (9)
-      builtin kill -n 2 $streamlinkpid
-      echo "$PROG[$$][$(date +%R)]: trying with signal 2 (INT)" > $LOGGER
+      builtin kill -n 9 $streamlinkpid
+      echo "$PROG[$$][$(date +%R)]: trying with signal 9 (TERM)" > $LOGGER
 
       $0 -maxreached &      
       break
@@ -141,10 +141,10 @@ streamLink() {
   touch $LOCK
   if [ -z "$1" ]; then
     echo "$PROG[$$][$(date +%R)]: starting streamlink…" > $LOGGER
-    nice -n -5 su $USERNAME -c "streamlink --retry-open 3 --retry-streams 5 --retry-max 10 --hls-live-edge 25 --hls-live-restart --hls-segment-threads 8 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-playlist-reload-attempts 10 --hls-timeout 280 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > /dev/kmsg 2>&1 &
+    nice -n -5 su $USERNAME -c "streamlink --retry-open 3 --retry-streams 5 --retry-max 10 --hls-live-edge 25 --hls-live-restart --hls-segment-threads 8 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-playlist-reload-attempts 10 --hls-timeout 280 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > $LOGGER &
   elif [ -n "$1" ]; then
     echo "$PROG[$$][$(date +%R)]: starting streamlink… Flags: $1" > $LOGGER
-    nice -n -5 su $USERNAME -c "streamlink --retry-open 15 --retry-streams 30 --retry-max 20 --hls-live-edge 25 --hls-segment-threads 8 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-start-offset=-05:00 --hls-playlist-reload-attempts 20 --hls-timeout 280 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > /dev/kmsg  2>&1 &
+    nice -n -5 su $USERNAME -c "streamlink --retry-open 15 --retry-streams 30 --retry-max 20 --hls-live-edge 25 --hls-segment-threads 8 --hls-segment-attempts 5 --hls-segment-timeout 30 --hls-start-offset=-05:00 --hls-playlist-reload-attempts 20 --hls-timeout 280 -o $RIP https://www.youtube.com/channel/$CHANNELID best" > $LOGGER &
   fi  
   streamlinkpid=$!
   wait $streamlinkpid
@@ -212,7 +212,10 @@ main()
     wait
     ;;
   1)
-    echo "$PROG[$$][$(date +%R)]: Ripping the stream is in progress…" > $LOGGER
+    local mins=$(date +%M)
+    
+    if [ $mins -eq 00 ]; then
+      echo "$PROG[$$][$(date +%R)]: Ripping the stream is in progress…" > $LOGGER
     exit 0
     ;;
   2)
