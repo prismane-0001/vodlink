@@ -63,6 +63,11 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 *Should you be a streamer and want me to set this up for your streams/VODs send me an email and I am sure we can work something out!*
 
 #### changelog:
+**03.07.2019:**
+- updated logging code (there were still typos left)
+- simplified `LOGGER` variable
+- `kill` is using `9 (SIGTERM)` now - because any other method fails to end shut down streamlink (I know it is not ideal but   it doesn't matter as we continue to rip the stream instantly
+
 **23.06.2019:**
 - updated manual
 - added FFmpeg check
