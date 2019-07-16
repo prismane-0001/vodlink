@@ -74,7 +74,7 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 
 **23.06.2019:**
 - updated manual
-- added FFmpeg check
+- added `FFmpeg` check
 ```
 wait $ffmpegpid
     if [ $? -ne 0 ]; then
