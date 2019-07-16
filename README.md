@@ -24,7 +24,7 @@ At the moment aimed at Debian based distros, but should also run on Mac OS X and
 
 ### Dependencies
 - `lwp-request (libwww-perl)` *(for the `GET` utility)*
-- `streamlink 1.1.1 (nightly)` *(can be installed with `pip3` like `sudo pip3 install --upgrade    git+https://github.com/streamlink/streamlink.git`)*
+- `streamlink 1.1.1 (nightly)` *(can be installed with `pip3` like `sudo pip3 install --upgrade     git+https://github.com/streamlink/streamlink.git`)*
 - `FFmpeg`
 - `Google API key for YouTube Data API v3`
 
