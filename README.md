@@ -64,7 +64,7 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 
 #### changelog:
 **16.07.2019:**
-- `vodlink v.0.5.4`
+- upgrade to `vodlink v.0.5.4`
 - upgrade `streamlink` to `1.1.1+41.g0f01f35` (quality selection fix)
 - new code for channel selection (main or alt)
 
