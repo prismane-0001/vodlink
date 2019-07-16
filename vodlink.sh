@@ -37,7 +37,7 @@ OSXCheck() {
   
 
 init() {  
-  PROG="vodlink v.0.5.3"
+  PROG="vodlink v.0.5.4"
   GOOGLE_API_KEY="your_api_key" # we run in a container of cron which has no knowledge of our env
   # ---- configure these four variables and you are set to go ----
   USERNAME=rick
