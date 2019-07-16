@@ -63,6 +63,10 @@ Should there be enough donations to move away from OpenLoad I will 100% reinvest
 *Should you be a streamer and want me to set this up for your streams/VODs send me an email and I am sure we can work something out!*
 
 #### changelog:
+**changelog 16.07.2019:**
+- upgrade to `streamlink` to `1.1.1+41.g0f01f35` (quality selection fix)
+- new code for channel selection (main or alt)
+
 **03.07.2019:**
 - updated logging code (there were still typos left)
 - simplified `LOGGER` variable
